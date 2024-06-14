@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* *:hover{
+  scrollbar-width: thin;
+} */
+*::-webkit-scrollbar {
+  @apply bg-transparent w-2;
+}
+*::-webkit-scrollbar-thumb {
+  @apply bg-primary-border rounded-lg md:block hidden;
+}
+
+.scrollbar-hover::-webkit-scrollbar-thumb {
+  @apply bg-transparent rounded-lg;
+}
+
+.scrollbar-hover:hover::-webkit-scrollbar-thumb {
+  @apply bg-primary-border;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-transparent;
+}
+
+@layer base {
+  :root {
+    --color-bg: 255 255 255;
+    --color-primary: 229 229 229;
+    --color-primary-hover: 212 212 212;
+    --color-primary-border: 163 163 163;
+    --color-primary-text: 0 0 0;
+    --color-secondary-text: 96 96 96;
+    --color-secondary-text-hover: 212 212 212;
+    --color-primary-dark: 38 38 38;
+    --color-primary-dark-hover: 23 23 23;
+    --color-primary-red: 235 31 39;
+    --color-primary-red-hover: 204 0 0;
+    --color-primary-blue: 62 166 255;
+    --color-primary-blue-hover: 101 184 255;
+  }
+  :root[data-theme="dark"] {
+    --color-bg: 15 15 15;
+    --color-primary: 39 39 39;
+    --color-primary-hover: 61 61 61;
+    --color-primary-border: 63 63 63;
+    --color-primary-text: 241 241 241;
+    --color-secondary-text: 170 170 170;
+    --color-secondary-text-hover: 212 212 212;
+    --color-primary-dark: 241 241 241;
+    --color-primary-dark-hover: 255 255 255;
+    --color-primary-red: 235 31 39;
+    --color-primary-red-hover: 204 0 0;
+    --color-primary-blue: 62 166 255;
+    --color-primary-blue-hover: 101 184 255;
+  }
+  :root[data-theme="light"] {
+    --color-bg: 15 15 15;
+    --color-primary: 39 39 39;
+    --color-primary-hover: 61 61 61;
+    --color-primary-border: 63 63 63;
+    --color-primary-text: 241 241 241;
+    --color-secondary-text: 96 96 96;
+    --color-secondary-text-hover: 212 212 212;
+    --color-primary-dark: 241 241 241;
+    --color-primary-dark-hover: 255 255 255;
+    --color-primary-red: 235 31 39;
+    --color-primary-red-hover: 204 0 0;
+    --color-primary-blue: 62 166 255;
+    --color-primary-blue-hover: 101 184 255;
+  }
+}
+.tooltip{
+  position: relative;
+}
+
+.tooltip::before,
+.tooltip::after {
+  --scale: 0;
+  --arrow-size: 10px;
+  z-index: 999;
+  position: absolute;
+  bottom: -1.25rem;
+  right: 0;
+  transform: translateY(50%) scale(var(--scale));
+  transition: transform 0.2s ease;
+  transform-origin: top right;
+}
+
+.tooltip::before{
+  --translate-y: calc(-100% - var(--arrow-size));
+
+  @apply bg-primary-hover;
+  content: attr(data-tooltip);
+  padding: .2rem .5rem;
+  width: max-content;
+  border-radius: .25rem;
+  text-align: center;
+}
+
+.tooltip:hover::before, 
+.tooltip:hover::after {
+  --scale: 1;
+}
+
+.tooltip:hover::after{
+  --translate-y: calc(-1 * var(--arrow-size));
+  content: '';
+  border: var(--arrow-size) solid transparent;
+  border-bottom-color: rgb(var(--color-primary-hover));
+  transform: translateY(var(--translate-y)) translateX(var(--translate-y));
+  transition: transform 0.2s ease;
+}
+
+.dropdown-menu{
+  @apply w-auto p-2 rounded-lg shadow min-w-52;
+  position: absolute;
+  z-index: 999;
+  background: rgb(var(--color-primary));
+  top: calc(100% + .5rem);
+  right: 0;
+
+}
+.dropdown-item{
+  @apply hover:bg-primary-hover rounded-lg h-10 flex items-center text-sm p-2 w-full;
+}
+
