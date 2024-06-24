@@ -10,7 +10,6 @@ import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 
 import { logger } from "./middleware/logEvents.js";
-import {errorHandler} from "./middleware/errorHandler.js";
 
 const app = express();
 dotenv.config();
@@ -50,8 +49,9 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+const port = process.env.PORT || 5000;
 // app.use(errorHandler);
 app.listen(5000, () => {
   connectDB();
-  console.log("Server started on port 5000");
+  console.log(`Server started on http://localhost:${port}`);
 });

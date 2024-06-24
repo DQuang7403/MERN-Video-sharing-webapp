@@ -9,6 +9,9 @@ import { useAppDispatch } from "../redux/hooks";
 
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { defaultToast } from "../utils/Constansts";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -39,6 +42,7 @@ export default function Login() {
       navigate(from, { replace: true });
     } catch (err) {
       dispatch(loginFailure());
+      toast.error("Login Failed! Please check your credentials", defaultToast);
     }
   };
   const LoginWithGoogle = async (result: any) => {
@@ -55,14 +59,13 @@ export default function Login() {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         },
-      
       );
       dispatch(setAuth(res.data));
       navigate(from, { replace: true });
-      console.log(res)
     } catch (error: any) {
       if (error.response.status === 400) {
         console.log("User already exists with username and password");
+        toast.error("User already exists with username and password", defaultToast);
       }
       dispatch(loginFailure());
     }
@@ -76,10 +79,12 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Login Failed", defaultToast);
       });
   };
   return (
     <section className="bg-primary col-span-2 sm:col-span-1">
+      <ToastContainer autoClose={5000}/>
       <div className="bg-primary-bg flex flex-col sm:flex-row overflow-auto items-start max-w-[1000px] mx-auto px-6 py-14 xl:mt-28 xl:rounded-2xl max-xl:h-full">
         <div className="sm:pr-6 mb-6 flex-grow">
           <img src={YoutubeIcon} className="w-14" alt="" />

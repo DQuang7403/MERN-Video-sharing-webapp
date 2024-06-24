@@ -11,7 +11,8 @@ import {
   getTrendingVideo,
   getVideoByUser,
   getTags,
-  getLikeVideo
+  getLikeVideo,
+  getVideosByQuery
 } from "../controllers/videos.js";
 import { authVerify } from "../middleware/authVerify.js";
 const router = express.Router();
@@ -28,5 +29,6 @@ router.get("/random", getRandomVideo);
 router.get("/trending", getTrendingVideo);
 router.get("/trending/tags", getTags);
 router.get("/like", authVerify, getLikeVideo);
+router.get("/search", getVideosByQuery);
 
 export default router;

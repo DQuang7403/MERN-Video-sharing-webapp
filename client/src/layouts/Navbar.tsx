@@ -16,6 +16,7 @@ type NavbarProps = {
 };
 export default function Navbar({ ToggleTheme }: NavbarProps) {
   const [showSearchBar, setShowSearchBar] = useState<Boolean>(false);
+  const [searchInput, setSearchInput] = useState<String>("");
   const { currentUser } = useAppSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState<Boolean>(false);
   const dispatch = useAppDispatch();
@@ -32,6 +33,10 @@ export default function Navbar({ ToggleTheme }: NavbarProps) {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
+  };
+  const onSearch = () => {
+    if (searchInput === "") return;
+    navigate(`/results?search_query=${searchInput}`);
   };
   return (
     <div
@@ -56,9 +61,15 @@ export default function Navbar({ ToggleTheme }: NavbarProps) {
           <input
             type="search"
             placeholder="Search"
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+            }}
             className="sm:w-full rounded-l-full border border-primary-border bg-primary-bg py-1 px-4 focus:border-blue-500 outline-none"
           />
-          <Button className="py-2 px-4 rounded-r-full border-primary-border border border-l-0 flex-shrink-0">
+          <Button
+            className="py-2 px-4 rounded-r-full border-primary-border border border-l-0 flex-shrink-0"
+            onClick={onSearch}
+          >
             <IoSearch className="text-2xl" />
           </Button>
         </div>
@@ -154,7 +165,7 @@ export const NavbarFirstSection = ({
 
       <Link to="/" className="flex items-center">
         <img src={logo} className="h-11" />
-        <span className="text-lg font-semibold">YouTube</span>
+        <span className="text-lg font-semibold">WeTube</span>
       </Link>
     </div>
   );

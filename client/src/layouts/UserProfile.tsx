@@ -26,7 +26,7 @@ export default function ProfilePage() {
         console.error(error);
       }
     };
-    fetchUserVideo();    
+    fetchUserVideo();
     fetchChannel();
   }, []);
   const setSelectedButton = (value: string) => {
@@ -35,12 +35,15 @@ export default function ProfilePage() {
   return (
     <section className="w-full flex-grow-1 overflow-auto min-h-[calc(100vh-64px)] md:px-20 px-2 py-8">
       <div className="w-full aspect-[7/1] min-h-40 mb-8 hidden md:block">
-        {/* <div className="bg-primary w-full h-full rounded-lg "></div> */}
-        <img
-          src="https://img.freepik.com/free-vector/abstract-background-with-flowers_23-2148987425.jpg?w=2000"
-          className="bg-primary w-full h-full rounded-lg object-cover"
-          alt=""
-        />
+        {userDetail?.banner === "" ? (
+          <div className="bg-primary w-full h-full rounded-lg " />
+        ) : (
+          <img
+            src={`${userDetail?.banner}`}
+            className="bg-primary w-full h-full rounded-lg object-cover"
+            alt=""
+          />
+        )}
       </div>
       <div className=" flex items-center gap-4">
         <img src={userDetail?.profileUrl} className=" w-32 rounded-full" />

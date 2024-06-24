@@ -84,11 +84,19 @@ export default function ChannelPage() {
     }
   };
   return (
-    <section className="w-full flex-grow-1 overflow-auto min-h-[calc(100vh-64px)]">
-      <div className="w-full aspect-[7/1] md:px-20 px-2 mb-8">
-        <div className=" bg-primary w-full h-full rounded-lg "></div>
+    <section className="w-full flex-grow-1 overflow-auto min-h-[calc(100vh-64px)] md:px-20 px-2 py-8">
+      <div className="w-full aspect-[7/1] min-h-40 mb-8 hidden md:block">
+        {userDetail?.banner === "" ? (
+          <div className="bg-primary w-full h-full rounded-lg " />
+        ) : (
+          <img
+            src={`${userDetail?.banner}`}
+            className="bg-primary w-full h-full rounded-lg object-cover"
+            alt=""
+          />
+        )}
       </div>
-      <div className="md:px-20 px-2 flex items-center gap-4">
+      <div className=" flex items-center gap-4">
         <img src={userDetail?.profileUrl} className=" w-40 rounded-full" />
         <div className="flex flex-col gap-2 max-h-40">
           <h1 className="text-3xl font-semibold">{userDetail?.name}</h1>
@@ -120,7 +128,7 @@ export default function ChannelPage() {
           </div>
         </div>
       </div>
-      <div className="md:px-20 px-2 my-8">
+      <div className="my-8">
       <GridVideos videos={videos} /></div>
     </section>
   );

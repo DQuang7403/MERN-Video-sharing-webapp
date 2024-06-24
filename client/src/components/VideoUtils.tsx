@@ -11,6 +11,8 @@ import { dislike, like } from "../redux/videoSlice";
 import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
 import { fetchChannelStart, fetchChannelSuccess } from "../redux/channelSlice";
 import { subcribe } from "../redux/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { defaultToast } from "../utils/Constansts";
 
 function numberFormatter(num: number) {
   const formatter = new Intl.NumberFormat(undefined, {
@@ -27,7 +29,7 @@ export default function VideoUtils({ ...videoDetails }) {
   const { currentUser } = useAppSelector((state) => state.user);
   const { currentVideo } = useAppSelector((state) => state.video);
   const { channel } = useAppSelector((state) => state.channel);
-  const [subcribed, setSubcribed] = useState<boolean>(false);
+  const [subscribed, setSubscribed] = useState<boolean>(false);
 
   const findChannel = () => {
     const found = currentUser?.subscribedUsers.find(
@@ -41,13 +43,13 @@ export default function VideoUtils({ ...videoDetails }) {
         dispatch(fetchChannelStart());
         const res = await axios.get(`user/find/${videoDetails.userId}`);
         dispatch(fetchChannelSuccess(res.data));
-        setSubcribed(findChannel());
+        setSubscribed(findChannel());
       } catch (err) {
         console.error(err);
       }
     };
     fetchChannelInfo();
-  }, [videoDetails.userId, subcribed, currentUser]);
+  }, [videoDetails.userId, subscribed, currentUser]);
 
   const handleSubcribe = async () => {
     try {
@@ -66,18 +68,20 @@ export default function VideoUtils({ ...videoDetails }) {
           username: channel?.username,
         }),
       );
-      setSubcribed(!subcribed);
-    } catch (err) {
-      console.error(err);
-      navigate("/login", { state: { from: location }, replace: true });
+    } catch (err: any) {
+      if (err.response.status === 403) {
+        toast.error(err.response.data, defaultToast);
+      } else {
+        navigate("/login", { state: { from: location }, replace: true });
+        toast.error("Something went wrong", defaultToast);
+      }
     }
   };
 
   const handleLike = async () => {
     try {
-      const res = await axiosPrivate.put(`/user/like/${currentVideo?._id}`, {});
+      await axiosPrivate.put(`/user/like/${currentVideo?._id}`, {});
       dispatch(like(currentUser?._id));
-      console.log(res.data);
     } catch (err) {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
@@ -85,9 +89,7 @@ export default function VideoUtils({ ...videoDetails }) {
   };
   const handleDislike = async () => {
     try {
-      const res = await axiosPrivate.put(`/user/dislike/${currentVideo?._id}`);
-      dispatch(dislike(currentUser?._id));
-      console.log(res.data);
+      await axiosPrivate.put(`/user/dislike/${currentVideo?._id}`);
     } catch (error) {
       console.error(error);
       navigate("/login", { state: { from: location }, replace: true });
@@ -96,21 +98,19 @@ export default function VideoUtils({ ...videoDetails }) {
 
   return (
     <div className="flex items-center justify-between flex-wrap gap-2">
+      <ToastContainer autoClose={5000} />
       <div className="flex mt-2 items-center sm:gap-5 gap-1 flex-grow">
         <Link to={`/channel/@${channel?.username}`}>
           <img src={channel?.profileUrl} className="w-10 rounded-full" />
         </Link>
         <div>
-          <Link
-            to={`/channel/@${channel?.username}`}
-            className="font-semibold"
-          >
+          <Link to={`/channel/@${channel?.username}`} className="font-semibold">
             {channel?.name}
           </Link>
           <p>{numberFormatter(channel?.subscribers || 0)} Subcriber</p>
         </div>
         <div className="max-[800px]:ml-auto">
-          {subcribed ? (
+          {subscribed ? (
             <button
               onClick={() => handleSubcribe()}
               className="bg-primary hover:bg-primary-hover  px-3 py-1 rounded-full flex items-center gap-2"

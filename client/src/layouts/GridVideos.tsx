@@ -35,7 +35,6 @@ function VideoCard({
   const [videoIsPlaying, setVideoIsPlaying] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState<boolean>(true);
-  const navigate = useNavigate();
   const muteIcon = muted ? (
     <BiVolumeMute
       onClick={() => setMuted(false)}
@@ -60,6 +59,7 @@ function VideoCard({
     if (video === null) return;
     if (videoIsPlaying) {
       video.currentTime = 0;
+      video.play();
     } else {
       video.pause();
     }

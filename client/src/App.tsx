@@ -21,6 +21,7 @@ import UserProfile from "./layouts/UserProfile";
 import GridVideos from "./layouts/GridVideos";
 import UserVideos from "./layouts/UserVideos";
 import UserDetails from "./layouts/UserDetails";
+import SearchResults from "./layouts/SearchResults";
 function App() {
   function ToggleTheme() {
     if (document.documentElement.dataset.theme === "dark") {
@@ -40,7 +41,7 @@ function App() {
           await refresh();
           console.log("refresh");
         } catch (err) {
-          console.error(err);
+          console.log(err);
         }
       }
     };
@@ -68,6 +69,7 @@ function App() {
 
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/results" element={<SearchResults />}></Route>
 
           {/* Private routes */}
           <Route path="/feed/">

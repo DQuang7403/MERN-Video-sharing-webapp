@@ -206,3 +206,29 @@ export const getLikeVideo = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc Get videos by search query
+// @route GET /api/video/search
+// @access Private
+export const getVideosByQuery = async (req, res, next) => {
+  const query = req.query.query;
+  const results = {};
+  try {
+    const videos = await Video.find({
+      title: { $regex: query, $options: "i" },
+    });
+
+    results.videos = videos;
+    const users = await User.find(
+      {
+        name: { $regex: query, $options: "i" },
+      },
+      { subscribedUsers: 0, password: 0, pwd: 0, signWithGoogle: 0 },
+    );
+    results.users = users;
+    console.log(results);
+    res.status(200).json(results);
+  } catch (error) {
+    next(error);
+  }
+};

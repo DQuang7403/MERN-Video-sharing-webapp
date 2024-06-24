@@ -6,7 +6,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { unstable_usePrompt, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
 type UploadedType = {
   videoUrl: boolean;

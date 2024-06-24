@@ -13,6 +13,7 @@ import { GoGear } from "react-icons/go";
 import { CiTrophy } from "react-icons/ci";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { BsExclamationSquare } from "react-icons/bs";
+import { ToastOptions, ToastPosition } from "react-toastify";
 
 export const categories = [
   "All",
@@ -117,5 +118,15 @@ export type ChannelType = {
   profileUrl: string;
   name: string;
   email: string;
+  banner: string;
   username: string;
+};
+export const defaultToast: ToastOptions<unknown> = {
+  position: "top-center" as ToastPosition, // Explicitly define the type
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  theme: "dark",
 };

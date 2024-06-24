@@ -84,11 +84,11 @@ function RelatedVideoCard({ ...videoDetails }: VideoCardProps) {
   return (
     <Link
       to={`/watch?v=${videoDetails._id}`}
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 "
     >
-      <div className="w-40 aspect-video relative">
+      <div className="w-40 relative">
         <img
-          className=" object-cover rounded-lg"
+          className=" object-cover rounded-lg aspect-video"
           src={videoDetails.thumbnailUrl}
         />
         {/* <div className="absolute bottom-1 right-1 text-white px-1 text-xs rounded bg-[rgba(0,0,0,0.8)]">

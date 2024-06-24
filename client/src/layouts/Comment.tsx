@@ -5,6 +5,8 @@ import axios from "../api/axios";
 import { useAppSelector } from "../redux/hooks";
 import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
 import { FaUserCircle } from "react-icons/fa";
+import { defaultToast } from "../utils/Constansts";
+import { ToastContainer, toast } from "react-toastify";
 type CommentType = {
   _id: string;
   videoId: string;
@@ -39,8 +41,10 @@ export default function Comment({ VideoId }: CommentProps) {
       try {
         const res = await axios.get(`/comment/get/${VideoId}`);
         setVideoComments(res.data);
+        
       } catch (error) {
         console.error(error);
+        
       }
     };
     fetchComment();
@@ -51,6 +55,10 @@ export default function Comment({ VideoId }: CommentProps) {
     const controller = new AbortController();
     e.preventDefault();
     try {
+      if(comment.length < 5){
+        toast.error("Comment must be at least 5 characters", defaultToast);
+        return
+      }
       const res = await axoisPrivate.post(
         "/comment/add",
         {
@@ -65,9 +73,11 @@ export default function Comment({ VideoId }: CommentProps) {
         },
       );
       console.log(res.data);
+      toast.success("Comment added", defaultToast);
       isMounted && setComment("");
     } catch (error) {
       console.error(error);
+      toast.error("Something went wrong", defaultToast);
       navigate("/login", { state: { from: location }, replace: true });
     }
     return () => {
@@ -78,6 +88,8 @@ export default function Comment({ VideoId }: CommentProps) {
 
   return (
     <div className="col-span-2 sm:px-6 px-2 mt-8 ">
+      <ToastContainer />
+
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2 flex-wrap">
           <div className="flex flex-grow">

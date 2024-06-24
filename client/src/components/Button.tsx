@@ -4,8 +4,8 @@ import { twMerge } from "tailwind-merge";
 const buttonStyles = cva(["hover:bg-primary-hover", "transition-color"], {
   variants: {
     variant: {
-      default: ["bg-primary", "hover:bg-primary-hover"],
-      ghost: ["hover:bg-primary"],
+      default: ["bg-primary", "hover:bg-primary-hover", "hover:scale-105"],
+      ghost: ["hover:bg-primary", "hover:scale-105", "transition-all"],
     },
     size: {
       default: [],

@@ -1,0 +1,22 @@
+version: '3.0'
+services:
+  client:
+    container_name: videos-sharing-client
+    build: ./client
+    ports:
+      - "5137:5137"
+    links:
+      - server
+    env_file:
+      - .env
+    depends_on:
+      - server
+
+  server:
+    container_name: videos-sharing-server
+    build: ./server
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+

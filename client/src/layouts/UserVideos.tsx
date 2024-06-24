@@ -19,8 +19,12 @@ export default function UserVideos() {
     fetchUserVideo();
   }, [currentUser]);
   return (
-    <div className="overflow-auto">
-      <GridVideos videos={videos} />
+    <div>
+      {videos.length === 0 ? (
+        <h1 className="text-xl ml-3">You haven't uploaded any video</h1>
+      ) : (
+        <GridVideos videos={videos} />
+      )}
     </div>
   );
 }

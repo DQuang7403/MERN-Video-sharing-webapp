@@ -29,6 +29,8 @@ const UserSchema = new mongoose.Schema(
     },
     profileUrl: {
       type: String,
+      default: "",
+      required: true,
     },
     subscribers: {
       type: Number,
@@ -42,8 +44,13 @@ const UserSchema = new mongoose.Schema(
     },
     signWithGoogle: {
       type: Boolean,
-      require: true,
+      required: true,
       default: false,
+    },
+    banner: {
+      type: String,
+      required: false,
+      default: "",
     }
   },
   { timestamps: true },

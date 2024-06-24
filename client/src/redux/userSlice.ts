@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type UserSlice = {
-  currentUser: null | { 
+  currentUser: null | {
+    signWithGoogle: boolean, 
     _id: string,
     username: string,
     name: string, 
@@ -14,6 +15,9 @@ type UserSlice = {
       profileUrl: string, 
       username: string,
     }[],
+    updatedAt: string,
+    createdAt: string,
+    banner: string,
   },
   token: string,
   loading: boolean,

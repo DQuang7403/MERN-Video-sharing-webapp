@@ -3,7 +3,6 @@ import GridVideos from "../layouts/GridVideos";
 import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { useRefresh } from "../hooks/useRefresh";
 import { logout } from "../redux/userSlice";
 import { useAppDispatch } from "../redux/hooks";
 

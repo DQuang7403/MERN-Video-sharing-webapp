@@ -24,13 +24,15 @@ export default function SubChannel() {
 }
 type ChannelBoxProps = {
   channel: {
-    id: string;
+    _id?: string;
+    id?: string;
     name: string;
     profileUrl: string;
     username: string;
   };
 };
 type ChannelType = {
+  _id: string;
   createdAt: string;
   email: string;
   name: string;
@@ -39,7 +41,7 @@ type ChannelType = {
   updatedAt: string;
   username: string;
 };
-const ChannelBox = ({ channel }: ChannelBoxProps) => {
+export const ChannelBox = ({ channel }: ChannelBoxProps) => {
   const [userInfo, setUserInfo] = useState({} as ChannelType);
   const { currentUser } = useAppSelector((state) => state.user);
   const [subcribed, setSubcribed] = useState<boolean>(false);
@@ -92,7 +94,10 @@ const ChannelBox = ({ channel }: ChannelBoxProps) => {
         className="flex items-center justify-center"
       >
         <div className="sm:mx-10 mx-5">
-          <img src={userInfo.profileUrl} className="min-w-20 w-32 rounded-full" />
+          <img
+            src={userInfo.profileUrl}
+            className="min-w-20 w-32 rounded-full"
+          />
         </div>
       </Link>
       <div className="flex items-center flex-wrap">

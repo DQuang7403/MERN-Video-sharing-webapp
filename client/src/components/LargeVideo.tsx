@@ -40,9 +40,9 @@ export default function LargeVideo({ ...videoDetail }: VideoCardProps) {
   return (
     <Link
       to={`/watch?v=${videoDetail._id}`}
-      className="flex items-center gap-3 max-w-[820px]"
+      className="flex items-center justify-start gap-3 max-w-[820px] max-[450px]:mx-auto"
     >
-      <div className="max-w-60 min-[450px]:mx-auto">
+      <div className="max-w-60 ">
         <img
           src={videoDetail.thumbnailUrl}
           alt=""

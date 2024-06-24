@@ -42,11 +42,15 @@ export const updateUser = async (req, res, next) => {
         req.params.id,
         {
           $set: {
-            ...req.body,
-            ...(req.body.pwd && {
-              password: bcript.hashSync(req.body.pwd, salt),
-              pwd: req.body.pwd,
-            }),
+            ...Object.keys(req.body).reduce((result, key) => {
+              if (key !== "pwd") {
+                result[key] = req.body[key];
+              } else if (key === "pwd" && req.body.pwd !== "") {
+                (result["pwd"] = req.body.pwd),
+                  (result["password"] = bcript.hashSync(req.body.pwd, salt));
+              }
+              return result;
+            }, {}),
           },
         },
         { new: true },
@@ -78,7 +82,7 @@ export const deleteUser = async (req, res, next) => {
 };
 
 // @desc Subscribe
-// @route PUT /api/user/subscribe/:id
+// @route PUT /api/user/sub/:id
 // @access Private
 export const subcribe = async (req, res, next) => {
   const user = await User.findById(req.params.id);
